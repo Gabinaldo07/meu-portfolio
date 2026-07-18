@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processos | Gabriel Portella</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #09090b; --bg-card: rgba(255, 255, 255, 0.02); --text-light: #f5f5f7; --text-muted: rgba(255, 255, 255, 0.65); --neon-green: #b0ff30; --neon-glow: rgba(176, 255, 48, 0.15); --card-border: rgba(255, 255, 255, 0.08); }
+        html { scroll-behavior: smooth; overflow-x: hidden; } 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif; line-height: 1.7; background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px), radial-gradient(circle at 50% 0%, #15151c 0%, var(--bg-dark) 80%); background-size: 40px 40px, 40px 40px, 100% 100%; background-attachment: fixed; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        body.no-scroll { overflow: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; flex: 1; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeInUp 0.8s ease forwards; } .delay-1 { animation-delay: 0.2s; }
+        
+        /* CABEÇALHO PADRONIZADO */
+        nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(9, 9, 11, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--card-border); z-index: 1000; padding: 15px 0; transition: all 0.3s ease; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .logo { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 1.3rem; letter-spacing: 1.5px; z-index: 2000; position: relative; } 
+        .logo-icon { color: var(--neon-green); margin-right: 6px; }
+        
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 6px; z-index: 2000; padding: 5px; position: relative; }
+        .menu-toggle .bar { width: 28px; height: 3px; background-color: var(--text-light); transition: all 0.3s ease; border-radius: 3px; }
+        .menu-toggle.open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: var(--neon-green); }
+        .menu-toggle.open .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: var(--neon-green); }
+
+        .nav-links { display: flex; gap: 40px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; align-items: center; }
+        .nav-links a { text-decoration: none; color: inherit; transition: color 0.3s; } .nav-links a:hover { color: var(--text-light); }
+        .nav-links a.active { color: white; border-bottom: 2px solid var(--neon-green); padding-bottom: 4px; }
+        
+        .btn-outline { text-decoration: none; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px 24px; border-radius: 50px; font-size: 0.85rem; text-transform: uppercase; font-weight: 600; transition: all 0.3s ease; }
+        .btn-outline:hover, .btn-outline.active { background-color: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 15px var(--neon-glow); }
+        .mobile-btn { display: none; }
+
+        /* RODAPÉ PADRONIZADO */
+        footer { background-color: #050507; border-top: 1px solid var(--card-border); padding: 30px 0; margin-top: auto; width: 100%; }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-left { text-align: left; } .footer-brand { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: white; letter-spacing: 1px; margin-bottom: 2px;}
+        .footer-copyright { font-size: 0.75rem; color: rgba(255, 255, 255, 0.3); } .footer-info { color: var(--text-muted); font-size: 0.85rem; text-align: center; }
+        .footer-info a { color: var(--neon-green); text-decoration: none; font-weight: 600;}
+        .back-to-top { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 50px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); color: var(--text-light); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; }
+        .back-to-top:hover { border-color: var(--neon-green); color: var(--neon-green); background: rgba(176, 255, 48, 0.05); }
+
+        /* CONTEÚDO ESPECÍFICO - PROCESSOS */
+        .feature-block { display: flex; align-items: center; gap: 70px; padding: 180px 0 100px 0; } 
+        .feature-image { flex: 1; height: 450px; width: 100%;}
+        .feature-content { flex: 1.2; }
+        .feature-content h1 { font-family: 'Oswald', sans-serif; font-size: 4rem; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 20px; line-height: 1.1; color: white; text-align: left;}
+        .feature-content h1 span { color: var(--neon-green); }
+        .feature-content p { color: var(--text-muted); margin-bottom: 30px; font-size: 1.15rem; font-weight: 300;text-align: justify;}
+        
+        .img-placeholder { width: 100%; height: 100%; min-height: 350px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);}
+        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+        
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 120px; }
+        .process-card { background: rgba(20, 20, 24, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--card-border); padding: 35px; border-radius: 12px; border-top: 3px solid transparent; transition: all 0.3s ease; display: flex; flex-direction: column;}
+        .process-card:hover { border-top-color: var(--neon-green); transform: translateY(-5px); background: rgba(25, 25, 30, 0.8); }
+        .process-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.4rem; color: white; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; text-align: left;}
+        .process-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; text-align: justify; flex-grow: 1;}
+
+        /* === RESPONSIVO ABSOLUTO E MENU TELA CHEIA === */
+        @media (max-width: 900px) {
+            .menu-toggle { display: flex; }
+            .desktop-btn { display: none; }
+            .nav-links { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background-color: rgba(5, 5, 7, 0.98); backdrop-filter: blur(15px); flex-direction: column; justify-content: center; align-items: center; gap: 20px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; padding: 20px; }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a:not(.mobile-btn) { font-size: 1.3rem; letter-spacing: 2px; color: var(--text-light); border-bottom: none !important; padding: 10px; width: auto; }
+            .nav-links a.active:not(.mobile-btn) { color: var(--neon-green); font-weight: 600; }
+            .mobile-btn { display: inline-flex !important; margin-top: 20px !important; font-size: 1rem; padding: 15px 40px !important; }
+
+            /* Ajustes Universais de Texto */
+            .feature-content h1 { font-size: 2.4rem !important; line-height: 1.15 !important; text-align: center !important; word-break: break-word; }
+            .feature-content p { font-size: 1.05rem !important; text-align: justify !important; margin-bottom: 30px !important; }
+
+            .feature-block { flex-direction: column; padding-top: 120px !important; padding-bottom: 40px !important; gap: 40px !important; text-align: center;} 
+            
+            /* Tags Centralizadas no Celular */
+            .tech-stack { justify-content: center !important; }
+            
+            /* Correção da Imagem no Mobile */
+            .feature-image { width: 100%; height: 350px !important; min-height: 350px !important; display: block; }
+            .img-placeholder { height: 100% !important; min-height: 350px !important; position: relative; }
+
+            /* Correção dos Cards (2 Colunas no Celular) */
+            .process-grid { grid-template-columns: 1fr 1fr !important; gap: 15px !important; }
+            .process-card { padding: 20px 15px !important; }
+            .process-card h3 { font-size: 1.1rem !important; text-align: center !important; line-height: 1.3 !important; margin-bottom: 10px !important;}
+            .process-card p { text-align: justify !important; font-size: 0.85rem !important; }
+
+            .footer-content { flex-direction: column; text-align: center; gap: 15px; } 
+            .footer-left { text-align: center !important; } 
+        }
+    </style>
+</head>
+<body id="topo">
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><a href="index.html" target="_top" style="text-decoration:none; color:inherit;"><span class="logo-icon">⚙</span> G.PORTELLA</a></div>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" target="_top">Início</a>
+                <a href="sobre.html" target="_top">Sobre</a>
+                <a href="solucoes.html" target="_top">Soluções & NRs</a>
+                <a href="projetos.html" target="_top">Projetos 3D</a>
+                <a href="processos.html" target="_top" class="active">Processos</a>
+                <a href="contato.html" target="_top" class="btn-outline mobile-btn">Contato</a>
+            </div>
+            <a href="contato.html" target="_top" class="btn-outline desktop-btn">Contato</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <section class="feature-block fade-in">
+            <div class="feature-content">
+                <h1>Processos & <span>Manufatura</span></h1>
+                <p>Integração entre o desenvolvimento técnico de produto e a máxima eficiência no chão de fábrica. Aplicação de metodologias avançadas para garantir que a produção alcance o menor custo e o maior nível de qualidade.</p>
+                <div class="tech-stack" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-start;">
+                    <span style="background: rgba(176, 255, 48, 0.1); color: var(--neon-green); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; border: 1px solid rgba(176, 255, 48, 0.2);">Lean Six Sigma</span>
+                    <span style="background: rgba(176, 255, 48, 0.1); color: var(--neon-green); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; border: 1px solid rgba(176, 255, 48, 0.2);">FMEA</span>
+                    <span style="background: rgba(176, 255, 48, 0.1); color: var(--neon-green); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; border: 1px solid rgba(176, 255, 48, 0.2);">Análise DMU</span>
+                    <span style="background: rgba(176, 255, 48, 0.1); color: var(--neon-green); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; border: 1px solid rgba(176, 255, 48, 0.2);">Kaizen</span>
+                    <span style="background: rgba(176, 255, 48, 0.1); color: var(--neon-green); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; border: 1px solid rgba(176, 255, 48, 0.2);">Melhoria Contínua</span>
+                </div>
+            </div>
+            <div class="feature-image fade-in delay-1">
+                <div class="img-placeholder">
+                    <img src="linha.jpg" alt="Linha de Montagem">
+                </div>
+            </div>
+        </section>
+
+        <section class="process-grid fade-in delay-1">
+            <div class="process-card">
+                <h3>Otimização Lean Six Sigma</h3>
+                <p>Mapeamento de fluxo de valor focado na redução sistêmica de desperdícios produtivos, balanceamento analítico de linhas de montagem e cronoanálise.</p>
+            </div>
+            <div class="process-card">
+                <h3>Compatibilidade CAD/Físico</h3>
+                <p>Atuação focada na resolução de inconsistências operacionais: alinhamento contínuo entre os requisitos virtuais do projeto e os procedimentos reais de montagem.</p>
+            </div>
+            <div class="process-card">
+                <h3>Gestão de BOM</h3>
+                <p>Elaboração, análise e controle rigoroso de Listas de Materiais (Bill of Materials), garantindo a rastreabilidade perfeita e a liberação de produção seriada.</p>
+            </div>
+            <div class="process-card">
+                <h3>Análise FMEA e Qualidade</h3>
+                <p>Estudo de falhas e efeitos focado na confiabilidade. Avaliação rigorosa de especificações técnicas, garantindo adequação legal antes da fase de produção.</p>
+            </div>
+            <div class="process-card">
+                <h3>Montagem de Protótipos</h3>
+                <p>Coordenação prática e acompanhamento da montagem de protótipos mecânicos diretamente no chão de fábrica, assegurando a aderência às especificações originais.</p>
+            </div>
+            <div class="process-card">
+                <h3>Análise DMU</h3>
+                <p>Identificação e resolução antecipada de interferências físicas na montagem, cruzando dados de engenharia para evitar falhas e custos adicionais na produção.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-brand">GABRIEL PORTELLA</div>
+                <div class="footer-copyright">&copy; 2026 Gabriel Portella. Todos os direitos reservados.</div>
+            </div>
+            <a href="#topo" class="back-to-top">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                Voltar ao Topo
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        if(mobileMenu && navLinks) {
+            mobileMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('open');
+                document.body.classList.toggle('no-scroll');
+            });
+        }
+    </script>
+</body>
+</html>
